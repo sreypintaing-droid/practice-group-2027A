@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Me</title>
+  <style>
+    /* --- CSS RESET & VARIABLES --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --accent-color: #38bdf8;
+      --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1rem;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* --- BACKGROUND ANIMATION GLOW --- */
+    .glow-bg {
+      position: absolute;
+      top: -10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(15, 23, 42, 0) 70%);
+      z-index: 0;
+      pointer-events: none;
+      animation: pulse 8s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: translateX(-50%) scale(0.8); opacity: 0.5; }
+      100% { transform: translateX(-50%) scale(1.2); opacity: 1; }
+    }
+
+    /* --- MAIN CONTAINER & ENTRANCE ANIMATION --- */
+    .container {
+      max-width: 800px;
+      width: 100%;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* --- HEADER SECTION --- */
+    .profile-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: var(--accent-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #fff;
+      margin: 0 auto 1.5rem auto;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+      transition: transform 0.4s ease;
+    }
+
+    .avatar:hover {
+      transform: scale(1.08) rotate(5deg);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: var(--accent-gradient);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+    }
+
+    /* --- CONTENT SECTIONS --- */
+    .section {
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      color: var(--text-main);
+      border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    p {
+      line-height: 1.7;
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* --- SKILLS TAGS --- */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .skill-tag {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+
+    .skill-tag:hover {
+      background: var(--accent-color);
+      color: #0f172a;
+      font-weight: 600;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(56, 189, 248, 0.4);
+    }
+
+    /* --- CARDS GRID --- */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 1.25rem;
+      border-radius: 16px;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .card p {
+      font-size: 0.875rem;
+    }
+
+    /* --- BUTTON & FOOTER --- */
+    .cta-container {
+      text-align: center;
+      margin-top: 2.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      border-radius: 50px;
+      background: var(--accent-gradient);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 10px 20px rgba(56, 189, 248, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 25px rgba(56, 189, 248, 0.5);
+    }
+
+    /* --- RESPONSIVE DESIGN --- */
+    @media (max-width: 600px) {
+      .container {
+        padding: 2rem 1.5rem;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow-bg"></div>
+
+  <div class="container">
+    <!-- Header Section -->
+    <header class="profile-header">
+      <div class="avatar">YN</div>
+      <h1>Your Name</h1>
+      <p class="subtitle">Creative Developer & Tech Enthusiast</p>
+    </header>
+
+    <!-- Bio Section -->
+    <section class="section">
+      <h2 class="section-title">About Me</h2>
+      <p>
+        Hello! I'm a passionate creator who loves turning ideas into digital realities. 
+        I specialize in crafting clean, user-friendly experiences and building projects 
+        that leave a lasting impression. When I'm not coding, you can find me exploring new 
+        technologies, reading, or working on creative side projects.
+      </p>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="section">
+      <h2 class="section-title">Skills & Interests</h2>
+      <div class="skills-grid">
+        <span class="skill-tag">HTML & CSS</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">UI/UX Design</span>
+        <span class="skill-tag">Problem Solving</span>
+        <span class="skill-tag">Web Animation</span>
+        <span class="skill-tag">Creative Writing</span>
+      </div>
+    </section>
+
+    <!-- Highlights Section -->
+    <section class="section">
+      <h2 class="section-title">What I Do</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3>Web Development</h3>
+          <p>Building responsive, fast, and modern websites tailored to modern standards.</p>
+        </div>
+        <div class="card">
+          <h3>UI/UX Design</h3>
+          <p>Designing intuitive and beautiful user interfaces that feel natural to navigate.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <div class="cta-container">
+      <a href="mailto:your.email@example.com" class="btn">Get In Touch please</a>
+    </div>
+  </div>
+
+</body>
+</html>
